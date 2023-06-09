@@ -1,3 +1,5 @@
+
+
 async function fetchData() {
 	try {
 
@@ -12,30 +14,75 @@ async function fetchData() {
 	}
   } 
 
+  async function fetchCategoryData() {
+	try{
+
+	
+	const response = await fetch('http://localhost:5678/api/category');
+	const Category = await response.json();
+	generateCategory(Category);
+	}
+	catch (error) {
+		console.error('Une erreur s\'est produite lors de la récupération des works :', error);
+	  }
+	}
+
+  
+
 
   function generateworks(works) {
-	const imageElement = document.querySelector(".gallery");
+	const workElement = document.querySelector(".gallery");
   
 	for (let i = 0; i < works.length; i++) {
 
-	  const imageCreation = document.createElement('figure');
-	  const imageCreated = document.createElement('img');
-	  const imageName = document.createElement('figcaption');         
+	  const workCreation = document.createElement('figure');
+	  const workCreated = document.createElement('img');
+	  const workName = document.createElement('figcaption');         
 
-	  imageCreated.setAttribute('src',works[i].imageUrl);
+	  workCreated.setAttribute('src',works[i].imageUrl);
 
-      imageName.innerText = works[i].title; 
+      workName.innerText = works[i].title; 
 	  
 
-	  imageCreation.appendChild(imageCreated);
-	  imageCreation.appendChild(imageName);
-      imageElement.appendChild(imageCreation);
+	  workCreation.appendChild(workCreated);
+	  workCreation.appendChild(workName);
+      workElement.appendChild(workCreation);
 	  
 	}
   }
   
   fetchData();
+  fetchCategoryData();
+
+
+const buttonFilterObjects = document.querySelector ('#Objets')
+const buttonFilterAppartements = document.querySelector ('#Appartements')
+const buttonFilterRestaurants = document.querySelector ('#Restaurants')
+let currentCategory = 0;
+innerHTML ="";
+
+buttonFilterObjects.addEventListener ('click', e=>{
 
 
 
 
+});
+
+
+
+buttonFilterAppartements.addEventListener ('click', e=> {
+
+
+
+
+});
+
+
+
+
+buttonFilterRestaurants.addEventListener ('click', e=> {
+
+
+
+
+});
