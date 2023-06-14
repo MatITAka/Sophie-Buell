@@ -11,13 +11,27 @@ async function fetchData() {
   
   async function fetchCategoryData() {
 	try {
-	  const response = await fetch('http://localhost:5678/api/category');
+	  const response = await fetch('http://localhost:5678/api/categories');
 	  const categories = await response.json();
+	  console.log(categories);
 	  generateCategory(categories);
 	} catch (error) {
 	  console.error('Une erreur s\'est produite lors de la récupération des catégories :', error);
 	}
   }
+// let categories = [];
+//   const fetchCategoryData = async () => {
+// 	await fetch('http://localhost:5678/api/categories')
+// 	  .then((res) => res.json().then((cat) => (categories = cat)))
+// 	  .catch((err) => {
+// 		console.log(`Erreur : ${err}`);
+// 	  });
+  
+// 	//Ajout des filtres
+// 	generateCategory(categories);
+//   };
+
+  
   
   function generateWorks(works) {
 	const workElement = document.querySelector('.gallery');
@@ -36,7 +50,7 @@ async function fetchData() {
 	}
   }
   
-  function generateCategoryButtons(categories) {
+  function generateCategory(categories) {
 	const categoryElement = document.querySelector('.filter_btn');
 	categoryElement.innerHTML = '';
   
@@ -45,18 +59,26 @@ async function fetchData() {
 	  categoryButton.innerText = categories[i].name;
 	  categoryButton.setAttribute('src',categories[i].id );
   
-	  categoryButton.addEventListener('click', () => {
-		filterWorksByCategory(categories[i].id);
-	  });
-  
+	  
 	  categoryElement.appendChild(categoryButton);
 	}
   }
+
+categoryButton.addEventListener('click', () => {
+		filterWorksByCategory(categories[i].categoryId);
+	  });
+  
   let currentCategory = 0;
+
+
+
   function filterWorksByCategory(categoryId) {
 	currentCategory = categoryId;
-	fetchCategoryData();
+	generateCategory();
   }
+
   
   fetchData();
   fetchCategoryData();
+
+  
