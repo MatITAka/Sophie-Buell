@@ -200,6 +200,7 @@ button{
 	font-family: 'work sans';
 	color: #1D6154;
 	height: 25px;
+	cursor: pointer;
 	
 	
 }
@@ -213,3 +214,7 @@ button:hover{
 	color: white;
 }
 
+ul a {
+	color: black;
+	text-decoration: none;
+}
