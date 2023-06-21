@@ -33,14 +33,21 @@
         </div>
         
         <div class="form_div">
-        <form action="#" method="post">
-			
-			<label for="email">Email</label>
+        <form id="form" action="#" method="post">
+			<div class="email-label">
+			<label id="email" for="email">Email</label>
 			<input type="email" name="email" id="email">
-			<label for="message">Mot de passe</label>
+            </div>
+
+            <div class="mdp-label">
+			<label id="mdp" for="message">Mot de passe</label>
 			<input type="password" id="password"></input>
-			<input type="submit" onclick="" value="Se connecter">
-		</form>
+            </div>
+            <p class="error-message"></p>
+			<input id="connection" type="submit" onclick="" value="Se connecter">
+		
+        
+        </form>
         </div>
         
         <div class="mdpOublié">
@@ -48,6 +55,7 @@
         </div>
         
         
+    <script src="/FrontEnd/assets/js/login.js"></script>
 
     </section>
    </main>

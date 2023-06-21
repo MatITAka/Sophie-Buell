@@ -75,5 +75,9 @@ async function fetchData() {
 	}
   }
 
+
+
+  
+
   fetchCategoryData();
   fetchData();
