@@ -30,7 +30,7 @@ a{
 }
 
 form input{
-	width: 300px;
+	width: 340px;
 	height: 40px;
 	border: 1px solid transparent;
 	background-color: white;
@@ -50,3 +50,21 @@ form label{
 	
 }
 
+#connection {
+	background-color: #1D6154;
+	border-radius: 20px;
+	color: white;
+	width: 150px;
+	margin-left:95px;
+	margin-bottom: 30px;
+	cursor: pointer;
+}
+
+.email-label{
+	display: flex;
+	flex-direction: column;
+}
+.mdp-label{
+	display: flex;
+	flex-direction: column;
+}
