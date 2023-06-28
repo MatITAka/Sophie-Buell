@@ -10,6 +10,7 @@ async function fetchData() {
 	  listWorks = works;
 
 	  generateWorks(currentCategory);
+	  workGallery(listWorks);
 	} catch (error) {
 	  console.error('Une erreur s\'est produite lors de la récupération des works :', error);
 	}

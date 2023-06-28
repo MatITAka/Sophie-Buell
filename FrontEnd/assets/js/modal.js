@@ -17,7 +17,9 @@ const imgContainer = document.querySelector(".img-container");
 const errorAdd = document.querySelector(".error-add");
 const deleteMsg = document.querySelector(".delete-msg");
 
-
+let imageForm = "";
+let categoryForm = "";
+let titleForm;
 
 
 function toggleModal() {
@@ -53,7 +55,6 @@ function toggleModal() {
   function addImage() {
     // Image
     addImageModal.addEventListener("input", (e) => {
-      //console.log(addImageModal.files[0]);
       imageForm = e.target.files[0];
       const img = URL.createObjectURL(imageForm);
       previewImg.src = img;
@@ -63,10 +64,12 @@ function toggleModal() {
     //Titre
     addTitle.addEventListener("input", (e) => {
       titleForm = e.target.value;
+      // console.log(addTitle);
     });
     //Catégories
     addCategorie.addEventListener("input", (e) => {
-      categoryForm = e.target.selectedIndex;
+      categoryForm = e.target.value;
+      // console.log(categoryForm);
     });
     //Submit
     addPicture.addEventListener("submit", (e) => {
@@ -82,19 +85,20 @@ function toggleModal() {
         fetch("http://localhost:5678/api/works", {
           method: "POST",
           headers: {
-            Authorization: `Bearer ${tokenValue}`,
+            Authorization: `Bearer ${JSON.parse(localStorage.getItem("info")).token}`,
           },
           body: formData,
         })
+        console.log(fetch)
           .then((response) => response.json())
           .then((res) => {
             console.log(res);
             errorAdd.innerText = "Posté !";
             errorAdd.style.color = "green";
+           
             //Clear les galleries
             gallery.innerHTML = "";
             modalGallery.innerHTML = "";
-            fetchGet();
             addPicture.reset();
             previewImg.src = "";
             previewImg.style.setProperty("display", "none");
@@ -107,12 +111,96 @@ function toggleModal() {
             console.log("Il y a eu une erreur sur le Fetch: " + err)
           );
       } else {
-        errorAdd.innerText = "Veuillez remplir tous les champs.";
-        errorAdd.style.color = "red";
-        setTimeout(() => {
-          errorAdd.innerText = "";
-        }, 4000);
-        console.log("Tous les champs ne sont pas remplis !");
+        alert("Veuilez remplir tous les champs");
       }
     });
   }
+
+function workGallery(works) {
+  const modalGallery = document.querySelector('.modal-gallery-work');
+  modalGallery.innerHTML = "";
+
+  for (let i = 0; i < works.length; i++) {
+    const work = works[i];
+
+    const workPost = document.createElement('figure');
+    workPost.setAttribute('id', work.id);
+
+    const workContainer = document.createElement('div');
+    workContainer.classList.add('workgallery-container');
+
+    const deleteIcon = document.createElement('i');
+    deleteIcon.id = work.id;
+    deleteIcon.classList.add('fa-solid', 'fa-trash-can', 'trash-icon');
+
+    const workImage = document.createElement('img');
+    workImage.classList.add('modal-image');
+    workImage.setAttribute('src', work.imageUrl);
+    workImage.setAttribute('alt', `image de ${work.title}`);
+
+    const editCaption = document.createElement('figcaption');
+    editCaption.innerText = 'éditer';
+
+    workContainer.appendChild(deleteIcon);
+    workContainer.appendChild(workImage);
+
+    workPost.appendChild(workContainer);
+    workPost.appendChild(editCaption);
+
+    modalGallery.appendChild(workPost);
+
+    deleteImage(deleteIcon);
+  }
+}
+
+
+// fetch API delete
+
+const fetchDelete = async (id) => {
+  await fetch("http://:5678/api/works/" + id, {
+    method: "DELETE",
+    headers: {
+      accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${JSON.parse(localStorage.getItem("info")).token}`,
+    },
+    mode: "cors",
+  })
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.confirmation === "OK") {
+        id.remove();
+      }
+      console.log(res);
+    })
+    .catch((err) => console.log("Il y a eu une erreur sur le Fetch: " + err));
+};
+
+function deleteImage(works) {
+  const deleteIcon = document.querySelectorAll(".trash-icon");
+  deleteIcon.forEach((delIcon) => {
+    delIcon.addEventListener("click", (e) => {
+      e.preventDefault();
+      const workId = parseInt(e.target.id);
+      const workIndex = works.findIndex((work) => work.id === workId);
+
+      if (workIndex !== -1) {
+        const work = works[workIndex];
+        const idRemove = document.getElementById(work.id);
+        const portfolioRemove = document.getElementById(work.id + ".");
+        
+        fetchDelete(work.id);
+        
+        console.log(work.id);
+        idRemove.remove();
+        portfolioRemove.remove();
+        deleteMsg.innerText = "Supprimé !";
+        setTimeout(() => {
+          deleteMsg.innerText = "";
+        }, 3000);
+      }
+    });
+  });
+}
+
+  addImage();
