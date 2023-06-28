@@ -66,7 +66,7 @@ async function fetchData() {
 	  const categoryButton = document.createElement('button');
 
 	  categoryButton.innerText = categories[i].name;
-	  categoryButton.setAttribute('src',categories[i].id );
+	//   categoryButton.setAttribute('src',categories[i].id );
 
 	  categoryButton.addEventListener('click', () => {		
 		generateWorks(categories[i].id);

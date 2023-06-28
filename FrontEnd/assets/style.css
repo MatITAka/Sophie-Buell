@@ -232,8 +232,9 @@ ul a {
 	align-items: center;
 	gap:20px;
 	background-color: black;
-	width: 100vw;
+	width: 100%;
 	margin-left: -70px;
+	padding-right:140px;
 	height: 50px;
 	
 }
@@ -263,7 +264,7 @@ ul a {
 }
 
 .font_pen {
-	color: #ffffff"
+	color: #ffffff ;
 }
 
 .edit-title i {
@@ -300,8 +301,8 @@ ul a {
 
 .edit-photo{
 	position: absolute;
-	left: 120px;
-	bottom: 140px;
+	left: 125px;
+	bottom: 160px;
 	
 }
 
@@ -312,3 +313,13 @@ ul a {
 #edit_project{
 	gap:20px;
 }
+
+#portfolio{
+	margin-top: 50px;
+	margin-bottom :20px;
+}
+
+#contact{
+	margin-top:30px;
+}
+

@@ -25,6 +25,7 @@ let titleForm;
 function toggleModal() {
     modalContainer.classList.toggle("target");
   }
+
   modalTriggers.forEach((trigger) =>
     trigger.addEventListener("click", toggleModal)
   );
@@ -61,16 +62,21 @@ function toggleModal() {
       previewImg.style.setProperty("display", "block");
       imgContainer.style.setProperty("display", "none");
     });
+
+
     //Titre
     addTitle.addEventListener("input", (e) => {
       titleForm = e.target.value;
       // console.log(addTitle);
     });
+
+
     //Catégories
     addCategorie.addEventListener("input", (e) => {
       categoryForm = e.target.value;
       // console.log(categoryForm);
     });
+
     //Submit
     addPicture.addEventListener("submit", (e) => {
       e.preventDefault();
@@ -114,6 +120,7 @@ function toggleModal() {
         alert("Veuilez remplir tous les champs");
       }
     });
+
   }
 
 function workGallery(works) {
@@ -124,13 +131,13 @@ function workGallery(works) {
     const work = works[i];
 
     const workPost = document.createElement('figure');
-    workPost.setAttribute('id', work.id);
+    // workPost.setAttribute('id', work.id);
 
     const workContainer = document.createElement('div');
     workContainer.classList.add('workgallery-container');
 
     const deleteIcon = document.createElement('i');
-    deleteIcon.id = work.id;
+    // deleteIcon.setAttribute('id',work.id);
     deleteIcon.classList.add('fa-solid', 'fa-trash-can', 'trash-icon');
 
     const workImage = document.createElement('img');
@@ -149,15 +156,19 @@ function workGallery(works) {
 
     modalGallery.appendChild(workPost);
 
-    deleteImage(deleteIcon);
+    // deleteImage(deleteIcon);
+    deleteIcon.addEventListener("click", () => {
+      fetchDelete( work.id)
+    });
+    
   }
 }
 
 
 // fetch API delete
 
-const fetchDelete = async (id) => {
-  await fetch("http://:5678/api/works/" + id, {
+const fetchDelete = (id) => {  
+  fetch("http://localhost:5678/api/works/" + id, {
     method: "DELETE",
     headers: {
       accept: "application/json",
@@ -168,39 +179,12 @@ const fetchDelete = async (id) => {
   })
     .then((response) => response.json())
     .then((res) => {
-      if (res.confirmation === "OK") {
-        id.remove();
-      }
-      console.log(res);
+      fetchData();
     })
     .catch((err) => console.log("Il y a eu une erreur sur le Fetch: " + err));
 };
 
-function deleteImage(works) {
-  const deleteIcon = document.querySelectorAll(".trash-icon");
-  deleteIcon.forEach((delIcon) => {
-    delIcon.addEventListener("click", (e) => {
-      e.preventDefault();
-      const workId = parseInt(e.target.id);
-      const workIndex = works.findIndex((work) => work.id === workId);
 
-      if (workIndex !== -1) {
-        const work = works[workIndex];
-        const idRemove = document.getElementById(work.id);
-        const portfolioRemove = document.getElementById(work.id + ".");
-        
-        fetchDelete(work.id);
-        
-        console.log(work.id);
-        idRemove.remove();
-        portfolioRemove.remove();
-        deleteMsg.innerText = "Supprimé !";
-        setTimeout(() => {
-          deleteMsg.innerText = "";
-        }, 3000);
-      }
-    });
-  });
-}
+
 
   addImage();
