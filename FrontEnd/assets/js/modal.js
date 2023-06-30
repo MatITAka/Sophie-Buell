@@ -67,14 +67,12 @@ function toggleModal() {
     //Titre
     addTitle.addEventListener("input", (e) => {
       titleForm = e.target.value;
-      // console.log(addTitle);
     });
 
 
     //Catégories
     addCategorie.addEventListener("input", (e) => {
       categoryForm = e.target.value;
-      // console.log(categoryForm);
     });
 
     //Submit
@@ -96,14 +94,12 @@ function toggleModal() {
           body: formData,
         })
         console.log(fetch)
-          .then((response) => response.json())
           .then((res) => {
             console.log(res);
             errorAdd.innerText = "Posté !";
             errorAdd.style.color = "green";
            
             //Clear les galleries
-            gallery.innerHTML = "";
             modalGallery.innerHTML = "";
             addPicture.reset();
             previewImg.src = "";
@@ -158,8 +154,15 @@ function workGallery(works) {
 
     // deleteImage(deleteIcon);
     deleteIcon.addEventListener("click", () => {
-      fetchDelete( work.id)
+      const userConfirmation = confirm("Voulez-vous vraiment supprimer cet élément ?");
+    
+      if (userConfirmation) {
+        fetchDelete(work.id);
+      } else {
+        alert("L'action de suppression a été annulé.");
+      }
     });
+    
     
   }
 }
@@ -177,7 +180,6 @@ const fetchDelete = (id) => {
     },
     mode: "cors",
   })
-    .then((response) => response.json())
     .then((res) => {
       fetchData();
     })

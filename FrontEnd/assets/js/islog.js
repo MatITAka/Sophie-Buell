@@ -50,8 +50,6 @@ else{
     editProject.style.display ="none"
 
     filterButton.style.display = "flex"
-
-    console.log(aaa);
 }
 
  logout = () => {
