@@ -92,8 +92,12 @@ function toggleModal() {
             Authorization: `Bearer ${JSON.parse(localStorage.getItem("info")).token}`,
           },
           body: formData,
+        
         })
-        console.log(fetch)
+        .then((res) => {
+          fetchData();
+        })
+        // console.log(fetch)
           .then((res) => {
             console.log(res);
             errorAdd.innerText = "Posté !";
