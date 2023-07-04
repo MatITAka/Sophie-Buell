@@ -109,6 +109,10 @@ function toggleModal() {
             previewImg.src = "";
             previewImg.style.setProperty("display", "none");
             imgContainer.style.setProperty("display", "flex");
+
+            imageForm = false; 
+            titleForm = false;
+            categoryForm = false;
             setTimeout(() => {
               errorAdd.innerText = "";
             }, 4000);
